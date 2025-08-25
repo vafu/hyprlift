@@ -3,7 +3,8 @@ This plugin is a work in progress, with a bunch of known bugs.
 
 ## Hyprlift
 
-Hyprland plugin that creates an effect of a focused window being "lifted" (or as MaterialDesign refers to it -- elevated) over other windows. This is acheived by sizing down all other windows and (potentially) modifying shadow of a "focused" window.
+Hyprland plugin that creates an effect of a focused window being "lifted" (or as MaterialDesign refers to it -- elevated) over other windows. This is acheived by sizing down all other windows and (potentially) modifying shadow of a "focused" window. 
+[official Hyprfocus](https://github.com/hyprwm/hyprland-plugins/tree/main/hyprfocus) plugin was used as a template.
 
 ## Install
 

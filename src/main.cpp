@@ -77,14 +77,15 @@ static void onFocusChange(PHLWINDOW window) {
   const float scale = **PUNFOCUSED_SCALE;
   const int activeWorkspaceID = window->workspaceID();
   for (const auto &pWin : g_pCompositor->m_windows) {
-    if (pWin->workspaceID() != activeWorkspaceID) continue;
-      if (pWin == window) {
-        // This is the newly focused window, so reset its scale to 1.0
-        resetWindowScale(pWin);
-      } else {
-        // This is an unfocused window, so scale it down
-        scaleWindow(pWin, scale);
-      }
+    if (pWin->workspaceID() != activeWorkspaceID)
+      continue;
+    if (pWin == window) {
+      // This is the newly focused window, so reset its scale to 1.0
+      resetWindowScale(pWin);
+    } else {
+      // This is an unfocused window, so scale it down
+      scaleWindow(pWin, scale);
+    }
   }
 }
 
@@ -116,11 +117,17 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
     throw std::runtime_error("[hyprlift] Version mismatch");
   }
 
-  // clang-format off
-    static auto P  = HyprlandAPI::registerCallbackDynamic(PHANDLE, "activeWindow", [&](void* self, SCallbackInfo& info, std::any data) { onFocusChange(std::any_cast<PHLWINDOW>(data)); });
+  static auto P = HyprlandAPI::registerCallbackDynamic(
+      PHANDLE, "activeWindow",
+      [&](void *self, SCallbackInfo &info, std::any data) {
+        onFocusChange(std::any_cast<PHLWINDOW>(data));
+      });
 
-    static auto PP  = HyprlandAPI::registerCallbackDynamic(PHANDLE, "workspace", [&](void* self, SCallbackInfo& info, std::any data) { onWorkspaceChange(std::any_cast<CWorkspace*>(data)); });
-  // clang-format on
+  static auto PP = HyprlandAPI::registerCallbackDynamic(
+      PHANDLE, "workspace",
+      [&](void *self, SCallbackInfo &info, std::any data) {
+        onWorkspaceChange(std::any_cast<CWorkspace *>(data));
+      });
 
   HyprlandAPI::addConfigValue(PHANDLE, "plugin:hyprlift:unfocused_scale",
                               Hyprlang::FLOAT{0.95F});
